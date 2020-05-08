@@ -141,6 +141,7 @@ public class ConfigController {
             throw new NacosException(NacosException.NO_RIGHT, "dataId:" + dataId + " is aggr");
         }
 
+        final Timestamp time = TimeUtils.getCurrentTime();
         String betaIps = request.getHeader("betaIps");
         ConfigInfo configInfo = new ConfigInfo(dataId, group, tenant, appName, content);
         if (StringUtils.isBlank(betaIps)) {

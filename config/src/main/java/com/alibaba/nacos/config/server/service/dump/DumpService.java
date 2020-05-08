@@ -58,6 +58,7 @@ import static com.alibaba.nacos.config.server.utils.LogUtil.fatalLog;
  * @author Nacos
  */
 @Service
+//不断的把服务器的数据dump到本地的文件中
 public class DumpService {
 
     @Autowired
@@ -69,6 +70,7 @@ public class DumpService {
     @PostConstruct
         public void init() {
         LogUtil.defaultLog.warn("DumpService start");
+        //                                  j
         DumpProcessor processor = new DumpProcessor(this);
         DumpAllProcessor dumpAllProcessor = new DumpAllProcessor(this);
         DumpAllBetaProcessor dumpAllBetaProcessor = new DumpAllBetaProcessor(this);

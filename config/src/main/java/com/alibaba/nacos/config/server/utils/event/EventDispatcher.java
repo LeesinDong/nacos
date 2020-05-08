@@ -47,6 +47,7 @@ public class EventDispatcher {
 
         for (AbstractEventListener listener : getEntry(event.getClass()).listeners) {
             try {
+                //          j
                 listener.onEvent(event);
             } catch (Exception e) {
                 log.error(e.toString(), e);

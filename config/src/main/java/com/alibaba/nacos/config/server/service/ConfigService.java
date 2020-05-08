@@ -70,7 +70,7 @@ public class ConfigService {
         }
 
         try {
-            final String md5 =  MD5Utils.md5Hex(content, Constants.ENCODE);
+            final String md5 = MD5Utils.md5Hex(content, Constants.ENCODE);
 
             if (md5.equals(ConfigService.getContentMd5(groupKey))) {
                 dumpLog.warn(
@@ -329,6 +329,9 @@ public class ConfigService {
                 DiskUtil.removeConfigInfo(dataId, group, tenant);
             }
             CACHE.remove(groupKey);
+            //触发LocalDataChangeEvent
+            //不是基于configController改完之后立马发过来,而是通过这里发的，为什么？
+            //不可能客户端一旦发生变化，就立马通知，因为 第一个考虑更改的频率，第二个只需要关心文件的变化就行了
             EventDispatcher.fireEvent(new LocalDataChangeEvent(groupKey));
 
             return true;
@@ -520,6 +523,7 @@ public class ConfigService {
         String serverMd5 = ConfigService.getContentMd5(groupKey);
         return StringUtils.equals(md5, serverMd5);
     }
+
     //服务端和请求端的md5进行比较
     static public boolean isUptodate(String groupKey, String md5, String ip, String tag) {
         String serverMd5 = ConfigService.getContentMd5(groupKey, ip, tag);

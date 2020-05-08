@@ -196,6 +196,7 @@ class DumpProcessor implements TaskProcessor {
                             cf.getContent().length());
                     }
                 } else {
+                    //                      j
                     result = ConfigService.remove(dataId, group, tenant);
 
                     if (result) {

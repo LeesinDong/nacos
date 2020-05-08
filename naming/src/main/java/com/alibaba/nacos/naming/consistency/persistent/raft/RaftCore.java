@@ -151,7 +151,7 @@ public class RaftCore {
     public Map<String, List<RecordListener>> getListeners() {
         return listeners;
     }
-
+    //这里
     public void signalPublish(String key, Record value) throws Exception {
 
         if (!isLeader()) {
@@ -160,7 +160,7 @@ public class RaftCore {
             params.put("value", value);
             Map<String, String> parameters = new HashMap<>(1);
             parameters.put("key", key);
-
+            //不是leader向leader发送
             raftProxy.proxyPostLarge(getLeader().ip, API_PUB, params.toJSONString(), parameters);
             return;
         }
@@ -180,7 +180,7 @@ public class RaftCore {
             JSONObject json = new JSONObject();
             json.put("datum", datum);
             json.put("source", peers.local());
-
+            //是leader向所有节点发送onpublish
             onPublish(datum, peers.local());
 
             final String content = JSON.toJSONString(json);
